@@ -1,0 +1,12 @@
+version: "3"
+services:
+  db:
+    image: "mysql/mysql-server:8.0"
+    container_name: "got_db"
+    restart: always
+    ports: 
+    - "3306:3306"
+    # volumes: 
+    #   - ./volumes/mysql:/var/lib/mysql
+    env_file:
+      - "./.mysql_env"
