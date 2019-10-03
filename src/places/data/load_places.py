@@ -11,7 +11,7 @@ DB_CONFIG = {
 }
 
 def read_locations():
-    with open('locations.csv') as csv:
+    with open('data/locations.csv') as csv:
         locations = csv.readlines()
     return locations
 
@@ -34,6 +34,7 @@ def insert_locations(locations):
                 VALUES ("{location}") 
                 '''
             )
+            print(f'Inserting {location}')
         connection.commit()
         
     
@@ -41,3 +42,6 @@ def main():
     locations = read_locations()
     clean = clean_locations(locations)
     insert_locations(clean)
+
+if __name__ == '__main__':
+    main()

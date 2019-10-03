@@ -14,7 +14,7 @@ DB_CONFIG = {
 NUM_LOCATIONS = 26
 
 def read_people():
-    with open('people.csv') as csv:
+    with open('data/people.csv') as csv:
         people = csv.readlines()
     return people
 

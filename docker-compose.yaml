@@ -1,12 +1,38 @@
 version: "3"
 services:
-  db:
+  places_db:
     image: "mysql/mysql-server:8.0"
-    container_name: "got_db"
     restart: always
     ports: 
     - "3306:3306"
-    # volumes: 
-    #   - ./volumes/mysql:/var/lib/mysql
     env_file:
-      - "./.mysql_env"
+      - "./.mysql_places_env"
+  people_db:
+    image: "mysql/mysql-server:8.0"
+    restart: always
+    ports: 
+    - "3307:3306"
+    env_file:
+      - "./.mysql_people_env"
+  places-api:
+    build: ./src/places/
+    ports:
+      - "5001:5000"
+    env_file: 
+      - "src/.env_places"
+    container_name: "places-api"
+    links:
+      - places_db
+    depends_on: 
+      - places_db
+  people-api:
+    build: ./src/people/
+    ports:
+      - "5002:5000"
+    env_file: 
+      - "src/.env_people"
+    container_name: "people-api"
+    links:
+      - people_db
+    depends_on: 
+      - people_db
