@@ -141,6 +141,97 @@ Once the services are deployed the next ports are mapped:
 * Microservice people: 5002
 * Microservice people-per-place: 5003
 
+### Examples
+
+**Places**
+
+```
+>>> r = requests.get('http://localhost:5001/places/')
+>>> pprint.pprint(json.loads(r.text))
+
+[{'id': '1', 'name': 'Golden Tooth'},
+ {'id': '2', 'name': "Mummer's Ford"},
+ {'id': '3', 'name': "Torrhen's Square"},
+ {'id': '4', 'name': 'Winterfell'},
+ {'id': '5', 'name': 'Oxcross'},
+ {'id': '6', 'name': "Storm's End"},
+ {'id': '7', 'name': 'Red Fork'},
+ {'id': '8', 'name': 'Harrenhal'},
+ {'id': '9', 'name': 'Crag'},
+ {'id': '10', 'name': "King's Landing"},
+ ```
+
+ ```
+>>> r = requests.get('http://localhost:5001/places/1')
+>>> pprint.pprint(json.loads(r.text))
+
+{'id': '1', 'name': 'Golden Tooth'}
+```
+
+**People**
+
+```
+>>> r = requests.get('http://localhost:5002/people/')
+>>> pprint.pprint(json.loads(r.text))
+[{'id': '1', 'isAlive': 'True', 'name': 'Viserys Plumm', 'placeId': '15'},
+ {'id': '2', 'isAlive': 'True', 'name': 'Melissa Blackwood', 'placeId': '7'},
+ {'id': '3', 'isAlive': 'True', 'name': 'Larys Strong', 'placeId': '19'},
+ {'id': '4', 'isAlive': 'False', 'name': 'Nettles', 'placeId': '7'},
+ {'id': '5', 'isAlive': 'True', 'name': 'Baela Targaryen', 'placeId': '12'},
+ {'id': '6',
+  'isAlive': 'False',
+  'name': 'Daella Targaryen (daughter of Maekar I)',
+  'placeId': '5'}]
+```
+
+```
+>>> r = requests.get('http://localhost:5002/people/1')
+>>> pprint.pprint(json.loads(r.text))
+{'id': '1', 'isAlive': 'True', 'name': 'Viserys Plumm', 'placeId': '15'}
+```
+
+**People-per-place**
+
+```
+>>> r = requests.get('http://localhost:5003/people-per-place/')
+>>> pprint.pprint(json.loads(r.text))
+{'items': [{'id': '1',
+            'name': 'Golden Tooth',
+            'people': [{'id': '38',
+                        'isAlive': True,
+                        'name': 'Daenerys Targaryen (daughter of Aegon IV)'}]},
+           {'id': '2',
+            'name': "Mummer's Ford",
+            'people': [{'id': '7', 'isAlive': False, 'name': 'Daena Targaryen'},
+                       {'id': '13',
+                        'isAlive': False,
+                        'name': 'Saera Targaryen'},
+                       {'id': '14', 'isAlive': True, 'name': 'Barba Bracken'},
+                       {'id': '19',
+                        'isAlive': False,
+                        'name': 'Aegon Targaryen (son of Jaehaerys I)'}]},
+           {'id': '3',
+            'name': "Torrhen's Square",
+            'people': [{'id': '21',
+                        'isAlive': True,
+                        'name': 'Rhaegel Targaryen'},
+                       {'id': '27',
+                        'isAlive': False,
+                        'name': 'Rhaenys Targaryen'}]}]
+}
+```
+
+```
+>>> r = requests.get('http://localhost:5003/people-per-place/24')
+>>> pprint.pprint(json.loads(r.text))
+{'id': '24',
+ 'name': 'Dragonstone',
+ 'people': [{'id': '12', 'isAlive': True, 'name': 'Medger Cerwyn'},
+            {'id': '36',
+             'isAlive': False,
+             'name': 'Rhaena Targaryen (daughter of Daemon)'},
+            {'id': '37', 'isAlive': False, 'name': 'Corlys Velaryon'}]}
+```
 
 ### Folder structure
 
