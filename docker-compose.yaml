@@ -36,3 +36,14 @@ services:
       - people_db
     depends_on: 
       - people_db
+  people-per-place-api:
+    build: ./src/people_per_place/
+    ports:
+      - "5003:5000"
+    container_name: "people-per-place-api"
+    links:
+      - people-api
+      - places-api
+    depends_on: 
+      - people-api
+      - places-api
